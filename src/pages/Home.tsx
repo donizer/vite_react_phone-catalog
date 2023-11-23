@@ -9,15 +9,15 @@ import { ProductType } from "../Types/ProductType";
 const images = [
   {
     url: `${baseUrl}/_new/img/banner-phones.png`,
-    to: "catalogue/phones",
+    to: "phones",
   },
   {
     url: `${baseUrl}/_new/img/banner-tablets.png`,
-    to: "catalogue/tablets",
+    to: "tablets",
   },
   {
     url: `${baseUrl}/_new/img/banner-accessories.png`,
-    to: "catalogue/accessories",
+    to: "accessories",
   },
 ];
 

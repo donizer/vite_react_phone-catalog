@@ -38,10 +38,6 @@ const App = () => {
     });
   };
 
-  const getTotalCartItem = () => {
-    return cartItems.reduce((prev, acc) => prev + acc.quantity, 0);
-  };
-
   return (
     <>
       <GridContainer>
@@ -56,15 +52,11 @@ const App = () => {
             >
               <StylishNavButton to="/">home</StylishNavButton>
 
-              <StylishNavButton to="catalogue/phones">phones</StylishNavButton>
+              <StylishNavButton to="phones">phones</StylishNavButton>
 
-              <StylishNavButton to="catalogue/tablets">
-                tablets
-              </StylishNavButton>
+              <StylishNavButton to="tablets">tablets</StylishNavButton>
 
-              <StylishNavButton to="catalogue/accessories">
-                accessories
-              </StylishNavButton>
+              <StylishNavButton to="accessories">accessories</StylishNavButton>
             </nav>
 
             <div className="flex justify-self-end">
@@ -88,7 +80,7 @@ const App = () => {
               />
 
               <StylishNavButton
-                counter={getTotalCartItem()}
+                counter={cartItems.length}
                 to="cart"
                 imgUrl={cartIco}
               />

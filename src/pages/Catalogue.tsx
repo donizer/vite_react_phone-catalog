@@ -14,7 +14,6 @@ import { StylishReactSelect } from "../Components/StylishReactSelect";
 
 import homeIco from "../assets/Icons/Home.svg";
 import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
-import { useDebounce } from 'usehooks-ts';
 
 type OptionPaginationType = { value: string; label: string };
 type OptionSortType = { value: string; label: string };
@@ -43,11 +42,9 @@ export const Catalogue = () => {
     setProducts,
   } = useContext(appContext);
 
-  const debouncedValue = useDebounce(visibleProducts, 300);
-
   const { catalogueId, itemId } = useParams();
 
-  const searchQuery = searchParams.get("query") || '';
+  const searchQuery = searchParams.get("query") || "";
   const currentPage = searchParams.get("page") || 1;
   const perPage = searchParams.get("per-page");
   const sortBy = searchParams.get("sort-by");
@@ -102,6 +99,12 @@ export const Catalogue = () => {
       default:
         break;
     }
+
+    setSearchParams((params) => {
+      params.delete("page");
+
+      return params;
+    });
   };
 
   const handlePaginationChange = (item: OptionPaginationType) => {
@@ -161,7 +164,7 @@ export const Catalogue = () => {
 
         <img src={rightIco} alt="home" />
 
-        <Link className="capitalize" to={`/catalogue/${catalogueId}`}>
+        <Link className="capitalize" to={`/${catalogueId}`}>
           {catalogueId}
         </Link>
 
@@ -187,7 +190,7 @@ export const Catalogue = () => {
           <p
             className={`text-Secondary col-span-full ${typographyStyle.bodyText}`}
           >
-            {searchQuery && `found ${debouncedValue.length} models`}
+            {searchQuery && `found ${visibleProducts.length} models`}
 
             {!searchQuery && categoryProducts.length === 0 && "not found"}
 
@@ -198,7 +201,7 @@ export const Catalogue = () => {
               }`}
           </p>
 
-          {!searchQuery && !!debouncedValue.length && (
+          {!searchQuery && !!visibleProducts.length && (
             <>
               <hr className="col-span-full mb-10 border-0" />
 
@@ -250,8 +253,8 @@ export const Catalogue = () => {
             <Loader />
           ) : (
             <div className="col-span-full grid grid-cols-4 gap-4">
-              {!!debouncedValue.length &&
-                debouncedValue.map((product) => (
+              {!!visibleProducts.length &&
+                visibleProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
             </div>

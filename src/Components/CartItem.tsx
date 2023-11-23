@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
-import { Link } from 'react-router-dom';
-import { baseUrl } from '../api/api';
-import { typographyStyle } from '../CustomStyles/Typography';
-import { CartItem } from '../Types/CartItem';
+import { Link } from "react-router-dom";
+import { baseUrl } from "../api/api";
+import { typographyStyle } from "../CustomStyles/Typography";
+import { CartItem } from "../Types/CartItem";
 
-import closeIco from '../assets/Icons/Close.svg'
-import plusIco from '../assets/Icons/Plus.svg'
-import minusIco from '../assets/Icons/Minus.svg'
+import closeIco from "../assets/Icons/Close.svg";
+import plusIco from "../assets/Icons/Plus.svg";
+import minusIco from "../assets/Icons/Minus.svg";
 
 type Props = {
   cartItem: CartItem;
@@ -24,13 +24,13 @@ export const CartItemCard: React.FC<Props> = ({
   const { product } = cartItem;
 
   return (
-    <div className="flex h-[128px] w-[752px] items-center border border-Elements">
+    <div className="border-Elements flex h-[128px] w-[752px] items-center border">
       <button onClick={removeProduct} className="mx-6" type="button">
         <img src={closeIco} alt="" />
       </button>
 
       <div className="flex h-20 w-20 items-center justify-center">
-        <Link to={`/catalogue/${product.category}/${product.itemId}`}>
+        <Link to={`/${product.category}/${product.itemId}`}>
           <img
             className="h-16 w-16 object-contain"
             src={`${baseUrl}/_new/${product.image}`}
@@ -40,14 +40,14 @@ export const CartItemCard: React.FC<Props> = ({
       </div>
 
       <div className="flex min-h-[42px] grow">
-        <Link to={`/catalogue/${product.category}/${product.itemId}`}>
+        <Link to={`/${product.category}/${product.itemId}`}>
           {product.name}
         </Link>
       </div>
 
       <div className="flex">
         <button
-          className="flex h-8 w-8 items-center justify-center border border-Elements"
+          className="border-Elements flex h-8 w-8 items-center justify-center border"
           type="button"
           onClick={increment}
         >
@@ -59,7 +59,7 @@ export const CartItemCard: React.FC<Props> = ({
         </div>
 
         <button
-          className="flex h-8 w-8 items-center justify-center border border-Elements"
+          className="border-Elements flex h-8 w-8 items-center justify-center border"
           type="button"
           onClick={decrement}
         >
@@ -67,10 +67,7 @@ export const CartItemCard: React.FC<Props> = ({
         </button>
       </div>
 
-      <p className={`w-40 px-[42px] ${typographyStyle.h2}`}>
-        $
-        {product.price}
-      </p>
+      <p className={`w-40 px-[42px] ${typographyStyle.h2}`}>${product.price}</p>
     </div>
   );
 };

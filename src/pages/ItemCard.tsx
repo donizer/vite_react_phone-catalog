@@ -94,7 +94,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
     <div className="col-span-full">
       <Link
         className={`text-Secondary hover:text-Primary flex w-min items-center gap-1 ${typographyStyle.smallText}`}
-        to={`/catalogue/${catalogueId}`}
+        to={`/${catalogueId}`}
       >
         <img src={leftIco} alt="back" />
         Back
@@ -152,7 +152,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
               {currentItem &&
                 currentItem.colorsAvailable.map((color) => (
                   <Link
-                    to={`/catalogue/${catalogueId}/${itemId?.replace(
+                    to={`/${catalogueId}/${itemId?.replace(
                       currentItem.color.toLowerCase(),
                       color.toLowerCase(),
                     )}`}
@@ -182,7 +182,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
               {currentItem &&
                 currentItem.capacityAvailable.map((capacity) => (
                   <Link
-                    to={`/catalogue/${catalogueId}/${itemId?.replace(
+                    to={`/${catalogueId}/${itemId?.replace(
                       currentItem.capacity.toLowerCase(),
                       capacity.toLowerCase(),
                     )}`}
@@ -206,7 +206,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
               <div className="font-bold leading-[140%] ">
                 ${currentItem?.priceDiscount}
               </div>
-              
+
               <div
                 className={`text-Secondary relative font-medium line-through ${typographyStyle.h2}`}
               >

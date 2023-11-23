@@ -67,7 +67,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
 
   return (
     <div className="border-Elements hover:border-Primary flex w-[272px] flex-col border p-6 transition-all hover:border">
-      <Link to={`/catalogue/phones/${product.itemId}`}>
+      <Link to={`/phones/${product.itemId}`}>
         <img
           className="h-[208px] w-[208px] self-center object-contain"
           src={`${baseUrl}/_new/${product.image}`}
@@ -78,7 +78,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       <hr className="h-6 border-0" />
 
       <Link
-        to={`/catalogue/phones/${product.itemId}`}
+        to={`/phones/${product.itemId}`}
         className={`flex h-[42px] w-[224px] items-center ${typographyStyle.bodyText}`}
       >
         {product.name}

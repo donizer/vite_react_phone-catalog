@@ -19,12 +19,12 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [categoryProducts, setCategoryProducts] = useState<ProductType[]>([]);
   const [visibleProducts, setVisibleProducts] = useState<ProductType[]>([]);
   const [currentItem, setCurrentItem] = useState<PhoneType | null>(null);
+  const [modalInfo, setModalInfo] = useState("");
   const [cartItems, setCartItems] = useLocalStorage<CartItem[]>("cart", []);
   const [favorites, setFavorites] = useLocalStorage<ProductType[]>(
     "favorites",
     [],
   );
-  const [modalInfo, setModalInfo] = useState("");
 
   const searchQuery = searchParams.get("query");
   const perPage = searchParams.get("per-page") || "8";
@@ -51,6 +51,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
+    setCategoryProducts([])
     const preparedVisibleProducts = products.filter((product) => {
       return pathname.includes(product.category);
     });
@@ -82,15 +83,20 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     let preparedVisibleProducts = [...categoryProducts];
 
     if (searchQuery) {
-      preparedVisibleProducts = preparedVisibleProducts.filter((product) => {
-        return product.name
-          .toLowerCase()
-          .includes(`${searchQuery}`.trim().toLowerCase());
-      });
+      const handler = setTimeout(() => {
+        preparedVisibleProducts = preparedVisibleProducts.filter((product) => {
+          return product.name
+            .toLowerCase()
+            .includes(`${searchQuery}`.trim().toLowerCase());
+        });
+  
+        setVisibleProducts(preparedVisibleProducts);
+  
+      }, 300)
 
-      setVisibleProducts(preparedVisibleProducts);
-
-      return;
+      return () => {
+        clearTimeout(handler)
+      }
     }
 
     if (sortBy) {

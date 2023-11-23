@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="catalogue/:catalogueId" element={<Catalogue />}>
+          <Route path=":catalogueId" element={<Catalogue />}>
             <Route path=":itemId" element={<ItemPage />} />
           </Route>
           <Route path="favourites" element={<Favourites />} />

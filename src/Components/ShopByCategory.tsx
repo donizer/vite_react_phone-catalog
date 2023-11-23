@@ -14,7 +14,7 @@ export const ShopByCategory = () => {
       <hr className="col-span-full h-[24px] border-0" />
 
       <div className="relative col-span-12 flex gap-x-4">
-        <Link to="catalogue/phones">
+        <Link to="phones">
           <div className="group relative mb-6 h-[368px] w-[368px] overflow-hidden bg-[#FCDBC1] transition-all hover:bg-[#fcd3b3]">
             <img
               className="absolute left-60 top-40 scale-150 transition-all group-hover:left-52 group-hover:top-36"
@@ -28,7 +28,7 @@ export const ShopByCategory = () => {
           </p>
         </Link>
 
-        <Link to="catalogue/tablets">
+        <Link to="tablets">
           <div className="group relative mb-6 h-[368px] w-[368px] overflow-hidden bg-[#8D8D92] transition-all hover:bg-[#9191a5]">
             <img
               className="absolute left-60 top-40 scale-150 transition-all group-hover:left-52 group-hover:top-36"
@@ -42,7 +42,7 @@ export const ShopByCategory = () => {
           </p>
         </Link>
 
-        <Link to="catalogue/accessories">
+        <Link to="accessories">
           <div className="group relative mb-6 h-[368px] w-[368px] overflow-hidden bg-[#973D5F] transition-all hover:bg-[#aa3864]">
             <img
               className="absolute left-60 top-40 scale-150 transition-all group-hover:left-52 group-hover:top-36"
