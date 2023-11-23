@@ -1,7 +1,7 @@
 import { createContext } from "react";
-import { ProductType } from '../Types/ProductType';
-import { PhoneType } from '../Types/PhoneType';
-import { CartItem } from '../Types/CartItem';
+import { ProductType } from "../Types/ProductType";
+import { PhoneType } from "../Types/PhoneType";
+import { CartItem } from "../Types/CartItem";
 
 export type AppContextType = {
   products: ProductType[];
@@ -18,6 +18,8 @@ export type AppContextType = {
   setFavorites: React.Dispatch<React.SetStateAction<ProductType[]>>;
   cartItems: CartItem[];
   setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  modalInfo: string;
+  setModalInfo: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const DefaultAppValues: AppContextType = {
@@ -35,6 +37,8 @@ const DefaultAppValues: AppContextType = {
   setFavorites: () => null,
   cartItems: [],
   setCartItems: () => null,
+  modalInfo: "",
+  setModalInfo: () => null,
 };
 
 export const appContext = createContext<AppContextType>(DefaultAppValues);

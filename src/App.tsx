@@ -12,9 +12,10 @@ import logo from "./assets/Icons/Logo.svg";
 import favoritesIco from "./assets/Icons/Favourites.svg";
 import cartIco from "./assets/Icons/Cart.svg";
 import searchIco from "./assets/Icons/Search.svg";
+import { Modal } from "./Components/Modal";
 
 const App = () => {
-  const { favorites, cartItems, searchParams, setSearchParams } =
+  const { favorites, cartItems, searchParams, setSearchParams, modalInfo, setModalInfo } =
     useContext(appContext);
   const { catalogueId, itemId } = useParams();
   const searchQuery = searchParams.get("query") || "";
@@ -99,7 +100,7 @@ const App = () => {
           >
             <a
               className="hover:text-Primary flex h-[96px]  items-center transition-all"
-              href="https://github.com/donizer/react_phone-catalog/"
+              href="https://github.com/donizer/vite_react_phone-catalog/"
               target="_blank"
               rel="noreferrer"
             >
@@ -132,6 +133,8 @@ const App = () => {
           </div>
         </div>
       </GridContainer>
+
+      {modalInfo && <Modal onClick={setModalInfo} message={modalInfo} />}
     </>
   );
 };

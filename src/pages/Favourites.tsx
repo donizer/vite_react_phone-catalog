@@ -5,6 +5,9 @@ import { typographyStyle } from "../CustomStyles/Typography";
 import { appContext } from "../Contexts/AppContext";
 import { ProductCard } from "../Components/ProductCard";
 
+import homeIco from "../assets/Icons/Home.svg";
+import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
+
 export const Favourites = () => {
   const { favorites } = useContext(appContext);
 
@@ -16,14 +19,14 @@ export const Favourites = () => {
         className={`text-Secondary col-span-full flex h-4 items-center gap-x-2 ${typographyStyle.smallText}`}
       >
         <Link to="/">
-          <img src="./Icons/Home.svg" alt="home" />
+          <img src={homeIco} alt="home" />
         </Link>
 
-        <img src="./Icons/Chevron (Arrow Right).svg" alt="home" />
+        <img src={rightIco} alt=">" />
 
-        <Link className="capitalize" to="/favourites">
+        <span className="capitalize">
           favourites
-        </Link>
+        </span>
       </div>
 
       <hr className="col-span-full mb-10 border-0" />

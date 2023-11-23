@@ -1,14 +1,15 @@
 /* eslint-disable max-len */
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { typographyStyle } from "../CustomStyles/Typography";
 import { appContext } from "../Contexts/AppContext";
 import { CartItemCard } from "../Components/CartItem";
 import { TextButton } from "../Components/TextButton";
 
+import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
+
 export const Cart = () => {
-  const { cartItems, setCartItems } = useContext(appContext);
-  const [errorMessage, setErrorMessage] = useState("");
+  const { cartItems, setCartItems, setModalInfo } = useContext(appContext);
 
   const getTotalPrice = () => {
     const totalPrice = cartItems.reduce(
@@ -26,7 +27,7 @@ export const Cart = () => {
   };
 
   const handleCheckout = () => {
-    setErrorMessage("We are sorry, but this feature is not implemented yet");
+    setModalInfo("We are sorry, but this feature is not implemented yet");
   };
 
   const addOneToCartItem = (cartItemIndex: number) => {
@@ -64,10 +65,10 @@ export const Cart = () => {
       <hr className="col-span-full h-10 border-0" />
 
       <Link
-        className={`text-Secondary flex w-min items-center gap-1 ${typographyStyle.smallText}`}
+        className={`text-Secondary hover:text-Primary flex w-min items-center gap-1 ${typographyStyle.smallText}`}
         to="/"
       >
-        <img src="./Icons/Chevron (Arrow Left).svg" alt="back" />
+        <img src={leftIco} alt="back" />
         Back
       </Link>
 
@@ -108,8 +109,7 @@ export const Cart = () => {
 
             <hr className="my-6" />
 
-            <div className="relative h-12 w-full">
-              <div className="absolute bottom-full text-xs">{errorMessage}</div>
+            <div className="h-12 w-full">
               <TextButton onClick={handleCheckout}>Checkout</TextButton>
             </div>
           </div>

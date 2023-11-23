@@ -145,14 +145,6 @@ export const Catalogue = () => {
     sortBy,
   ]);
 
-  // useEffect(() => {
-  //   setSearchParams((params) => {
-  //     params.set("page", "1");
-
-  //     return params;
-  //   });
-  // }, [perPage]);
-
   return (
     <>
       <hr className="col-span-full mb-6 border-0" />

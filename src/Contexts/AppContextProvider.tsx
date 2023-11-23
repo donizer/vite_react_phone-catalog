@@ -25,6 +25,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     "favorites",
     [],
   );
+  const [modalInfo, setModalInfo] = useState('')
 
   const searchQuery = searchParams.get("query") || "";
   const perPage = searchParams.get("per-page") || "8";
@@ -46,6 +47,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     setFavorites,
     cartItems,
     setCartItems,
+    modalInfo, setModalInfo
   };
 
   useEffect(() => {
@@ -92,7 +94,6 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     }, 500);
 
     if (searchQuery) {
-      setVisibleProducts([]);
       debouncedFilter(preparedVisibleProducts);
 
       return;

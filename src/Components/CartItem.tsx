@@ -4,6 +4,7 @@ import { baseUrl } from '../api/api';
 import { typographyStyle } from '../CustomStyles/Typography';
 import { CartItem } from '../Types/CartItem';
 
+import closeIco from '../assets/Icons/Close.svg'
 import plusIco from '../assets/Icons/Plus.svg'
 import minusIco from '../assets/Icons/Minus.svg'
 
@@ -25,7 +26,7 @@ export const CartItemCard: React.FC<Props> = ({
   return (
     <div className="flex h-[128px] w-[752px] items-center border border-Elements">
       <button onClick={removeProduct} className="mx-6" type="button">
-        <img src="./Icons/Close.svg" alt="" />
+        <img src={closeIco} alt="" />
       </button>
 
       <div className="flex h-20 w-20 items-center justify-center">

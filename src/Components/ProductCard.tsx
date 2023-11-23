@@ -31,22 +31,38 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
     }
   };
 
-  const addToCart = () => {
+  const addToCart = (product: ProductType) => {
     const cartItemIndex = cartItems.findIndex(
       (item) => item.product.itemId === product.itemId,
     );
 
-    if (cartItemIndex >= 0) {
-      const newItems = [...cartItems];
-
-      newItems[cartItemIndex].quantity += 1;
-      setCartItems([...newItems]);
-    } else {
+    if (cartItemIndex < 0) {
       setCartItems([
         ...cartItems,
         { quantity: 1, product, id: product.itemId },
       ]);
+    } else {
+      setCartItems([
+        ...cartItems.slice(0, cartItemIndex),
+        ...cartItems.slice(cartItemIndex + 1),
+      ]);
     }
+  };
+
+  const getNumberInCart = () => {
+    if (!product) {
+      return;
+    }
+
+    const cartItemIndex = cartItems.findIndex(
+      (item) => item.product.itemId === product.itemId,
+    );
+
+    if (cartItemIndex < 0) {
+      return null;
+    }
+
+    return cartItems[cartItemIndex].quantity;
   };
 
   return (
@@ -99,7 +115,9 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       <hr className="mb-4 border-0" />
 
       <div className={`flex h-10 gap-2 ${typographyStyle.button}`}>
-        <TextButton onClick={addToCart}>Add to cart</TextButton>
+        <TextButton onClick={() => addToCart(product)}>
+          {`${!getNumberInCart() ? "Add to cart" : "Remove from cart"}`}
+        </TextButton>
 
         <div className="w-10 shrink-0">
           <FavouritesButton active={isLiked} onClick={toggleFavorite} />

@@ -13,6 +13,8 @@ import { ProductsSlider } from "../Components/ProductsSlider";
 import { appContext } from "../Contexts/AppContext";
 import { ProductType } from "../Types/ProductType";
 
+import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
+
 type Props = {
   currentItem: PhoneType;
 };
@@ -51,17 +53,33 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
       (item) => item.product.itemId === currentItem.id,
     );
 
-    if (cartItemIndex >= 0) {
-      const newItems = [...cartItems];
-
-      newItems[cartItemIndex].quantity += 1;
-      setCartItems([...newItems]);
-    } else {
+    if (cartItemIndex < 0) {
       setCartItems([
         ...cartItems,
         { quantity: 1, product, id: product.itemId },
       ]);
+    } else {
+      setCartItems([
+        ...cartItems.slice(0, cartItemIndex),
+        ...cartItems.slice(cartItemIndex + 1),
+      ]);
     }
+  };
+
+  const getNumberInCart = () => {
+    if (!product) {
+      return;
+    }
+
+    const cartItemIndex = cartItems.findIndex(
+      (item) => item.product.itemId === currentItem.id,
+    );
+
+    if (cartItemIndex < 0) {
+      return null;
+    }
+
+    return cartItems[cartItemIndex].quantity;
   };
 
   useEffect(() => {
@@ -75,10 +93,10 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
   return (
     <div className="col-span-full">
       <Link
-        className={`text-Secondary flex w-min items-center gap-1 ${typographyStyle.smallText}`}
+        className={`text-Secondary hover:text-Primary flex w-min items-center gap-1 ${typographyStyle.smallText}`}
         to={`/catalogue/${catalogueId}`}
       >
-        <img src="./Icons/Chevron (Arrow Left).svg" alt="back" />
+        <img src={leftIco} alt="back" />
         Back
       </Link>
 
@@ -114,6 +132,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
                 );
               })}
           </div>
+
           <div className="flex h-[464px] w-[464px] items-center justify-center">
             <img
               className="h-[442px] w-[442px] object-contain"
@@ -158,6 +177,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
             <p className={`text-Secondary mb-2 ${typographyStyle.smallText}`}>
               Select capacity
             </p>
+
             <div className="flex gap-2">
               {currentItem &&
                 currentItem.capacityAvailable.map((capacity) => (
@@ -186,6 +206,7 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
               <div className="font-bold leading-[140%] ">
                 ${currentItem?.priceDiscount}
               </div>
+              
               <div
                 className={`text-Secondary relative font-medium line-through ${typographyStyle.h2}`}
               >
@@ -194,7 +215,9 @@ export const ItemCard: React.FC<Props> = ({ currentItem }) => {
             </div>
 
             <div className={`flex h-12 gap-2 ${typographyStyle.button}`}>
-              <TextButton onClick={addToCart}>Add to cart</TextButton>
+              <TextButton active={!!getNumberInCart()} onClick={addToCart}>
+                {`${!getNumberInCart() ? "Add to cart" : "Remove from cart"}`}
+              </TextButton>
 
               <div className="h-12 w-12 shrink-0">
                 <FavouritesButton active={isLiked} onClick={toggleFavorite} />

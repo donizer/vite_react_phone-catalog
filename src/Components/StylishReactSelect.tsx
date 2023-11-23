@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import classNames from 'classnames';
-import Select, { ClassNamesConfig, StylesConfig } from 'react-select';
-import { typographyStyle } from '../CustomStyles/Typography';
+import classNames from "classnames";
+import Select, { ClassNamesConfig, StylesConfig } from "react-select";
+import { typographyStyle } from "../CustomStyles/Typography";
 
 type Props = {
   className: string;
@@ -11,24 +11,33 @@ type Props = {
 };
 
 const customClasses: ClassNamesConfig = {
-  menu: () => 'rounded-none',
-  menuList: () => `text-Secondary border py-2 border-Elements bg-white ${typographyStyle.bodyText}`,
-  control: () => 'rounded-none border border-Icons px-3 py-0 shadow-none focus-within:border-Primary hover:border-Secondary',
-  option: state => classNames(
-    'flex h-8 items-center px-3 py-0 hover:bg-Background hover:text-Primary',
-    {
-      'bg-Background text-Primary': state.isSelected,
-    },
-  ),
-  dropdownIndicator: state => classNames('transition-all', {
-    'rotate-180': state.selectProps.menuIsOpen,
-  }),
+  menu: () => "rounded-none",
+  menuList: () =>
+    `text-Secondary border py-2 border-Elements bg-white ${typographyStyle.bodyText}`,
+  control: () =>
+    "rounded-none border border-Icons px-3 py-0 shadow-none focus-within:border-Primary hover:border-Secondary",
+  option: (state) =>
+    classNames(
+      "flex h-8 items-center px-3 py-0 hover:bg-Background hover:text-Primary",
+      {
+        "bg-Background text-Primary": state.isSelected,
+      },
+    ),
+  dropdownIndicator: (state) =>
+    classNames("transition-all", {
+      "rotate-180": state.selectProps.menuIsOpen,
+    }),
 };
 
 const customStyles: StylesConfig = {
-  option: state => ({
+  option: (state) => ({
     ...state,
-    display: 'flex',
+    display: "flex",
+    cursor: "pointer",
+  }),
+  control: (state) => ({
+    ...state,
+    cursor: "pointer",
   }),
 };
 
