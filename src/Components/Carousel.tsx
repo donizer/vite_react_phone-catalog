@@ -34,7 +34,6 @@ const Carousel: React.FC<Props> = ({
   const [transformValue, setTransformValue] = useState(activeIndex * itemWidth);
 
   const updateIndex = (newIndex: number) => {
-    console.log(newIndex);
     let modifiedIndex = newIndex;
 
     if (newIndex < 0 && activeIndex > 0) {
@@ -47,17 +46,10 @@ const Carousel: React.FC<Props> = ({
       modifiedIndex = infinite ? 0 : lastFramedIndex;
     }
 
-    console.log(
-      newIndex < 0 && activeIndex > 0,
-      newIndex < 0,
-      newIndex >= lastFramedIndex && activeIndex < lastFramedIndex,
-      newIndex >= lastFramedIndex,
-    );
     setActiveIndex(modifiedIndex);
   };
 
   const swipeLeft = () => {
-    console.log(activeIndex, step, activeIndex + step);
     updateIndex(activeIndex + step);
   };
 

@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 import { useState, useEffect } from "react";
-import { debounce } from "lodash";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
-import { appContext, AppContextType } from './AppContext';
+import { appContext, AppContextType } from "./AppContext";
 
 import type { ProductType } from "../Types/ProductType";
 import type { PhoneType } from "../Types/PhoneType";
@@ -25,9 +24,9 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     "favorites",
     [],
   );
-  const [modalInfo, setModalInfo] = useState('')
+  const [modalInfo, setModalInfo] = useState("");
 
-  const searchQuery = searchParams.get("query") || "";
+  const searchQuery = searchParams.get("query");
   const perPage = searchParams.get("per-page") || "8";
   const sortBy = searchParams.get("sort-by") || "year";
   const page = searchParams.get("page") || "1";
@@ -47,7 +46,8 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     setFavorites,
     cartItems,
     setCartItems,
-    modalInfo, setModalInfo
+    modalInfo,
+    setModalInfo,
   };
 
   useEffect(() => {
@@ -81,28 +81,20 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     let preparedVisibleProducts = [...categoryProducts];
 
-    const debouncedFilter = debounce((array: ProductType[]) => {
-      let newArr = [...array];
-
-      newArr = array.filter((product) => {
+    if (searchQuery) {
+      preparedVisibleProducts = preparedVisibleProducts.filter((product) => {
         return product.name
           .toLowerCase()
-          .includes(searchQuery.trim().toLowerCase());
+          .includes(`${searchQuery}`.trim().toLowerCase());
       });
 
-      setVisibleProducts(newArr);
-    }, 500);
-
-    if (searchQuery) {
-      debouncedFilter(preparedVisibleProducts);
+      setVisibleProducts(preparedVisibleProducts);
 
       return;
     }
 
     if (sortBy) {
       preparedVisibleProducts = sortProducts(preparedVisibleProducts, sortBy);
-    } else {
-      preparedVisibleProducts = sortProducts(preparedVisibleProducts, "year");
     }
 
     if (perPage !== "All") {
@@ -115,7 +107,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     }
 
     setVisibleProducts(preparedVisibleProducts);
-  }, [perPage, searchQuery, page, sortBy, categoryProducts]);
+  }, [categoryProducts, page, perPage, searchQuery, sortBy]);
 
   return <appContext.Provider value={state}>{children}</appContext.Provider>;
 };

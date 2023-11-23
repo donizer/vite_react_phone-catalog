@@ -15,14 +15,24 @@ import searchIco from "./assets/Icons/Search.svg";
 import { Modal } from "./Components/Modal";
 
 const App = () => {
-  const { favorites, cartItems, searchParams, setSearchParams, modalInfo, setModalInfo } =
-    useContext(appContext);
+  const {
+    favorites,
+    cartItems,
+    searchParams,
+    setSearchParams,
+    modalInfo,
+    setModalInfo,
+  } = useContext(appContext);
   const { catalogueId, itemId } = useParams();
   const searchQuery = searchParams.get("query") || "";
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchParams((params) => {
-      params.set("query", event.target.value);
+      if (event.target.value) {
+        params.set("query", event.target.value);
+      } else {
+        params.delete("query");
+      }
 
       return params;
     });
