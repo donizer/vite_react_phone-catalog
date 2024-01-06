@@ -1,7 +1,6 @@
 import "./index.css";
 
 import {
-  // HashRouter as Router,
   Navigate,
   Route,
   BrowserRouter as Router,
@@ -27,7 +26,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>
-        <Router>
+        <Router basename="vite_react_phone-catalog">
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Home />} />
