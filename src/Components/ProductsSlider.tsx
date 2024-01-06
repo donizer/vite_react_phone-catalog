@@ -4,10 +4,10 @@ import { ProductCard } from './ProductCard';
 import { typographyStyle } from '../CustomStyles/Typography';
 import { ProductType } from '../Types/ProductType';
 
-type Props = {
+interface Props {
   title?: string;
   products: ProductType[];
-};
+}
 
 export const ProductsSlider: React.FC<Props> = ({ title = '', products }) => {
   const [index, setIndex] = useState(0);

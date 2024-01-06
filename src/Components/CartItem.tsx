@@ -8,12 +8,12 @@ import closeIco from "../assets/Icons/Close.svg";
 import plusIco from "../assets/Icons/Plus.svg";
 import minusIco from "../assets/Icons/Minus.svg";
 
-type Props = {
+interface Props {
   cartItem: CartItem;
   increment: () => void;
   decrement: () => void;
   removeProduct: () => void;
-};
+}
 
 export const CartItemCard: React.FC<Props> = ({
   cartItem,

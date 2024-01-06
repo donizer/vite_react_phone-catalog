@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from "react";
-import Carousel from "../Components/Carousel";
+import { Carousel } from "../Components/Carousel";
 import { ProductsSlider } from "../Components/ProductsSlider";
 import { ShopByCategory } from "../Components/ShopByCategory";
 import { api, baseUrl } from "../api/api";
@@ -26,8 +26,8 @@ export const Home = () => {
   const [cheapPhones, setCheapPhones] = useState<ProductType[]>([]);
 
   useEffect(() => {
-    api.getExpensivePhones().then(setExpensivePhones);
-    api.getCheapPhones().then(setCheapPhones);
+    void api.getExpensivePhones().then(setExpensivePhones);
+    void api.getCheapPhones().then(setCheapPhones);
   }, []);
 
   return (

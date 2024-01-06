@@ -1,155 +1,70 @@
-/* eslint-disable max-len */
-import { useContext, useEffect, useState, useCallback, useMemo } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { useEffect, useCallback } from "react";
+import { Link, Outlet, useParams, useSearchParams } from "react-router-dom";
 
-import { appContext } from "../Contexts/AppContext";
 import { typographyStyle } from "../CustomStyles/Typography";
 import { ProductCard } from "../Components/ProductCard";
-import { scrollToTop } from "../utils/scrollToTop";
-import { Pagintaion } from "../Components/Pagintaion";
-import { PaginationHelper } from "../utils/PaginationHelper";
 import { Loader } from "../Components/Loader";
-import { api } from "../api/api";
-import { StylishReactSelect } from "../Components/StylishReactSelect";
+
+import { fetchProducts } from "../features/productsSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 import homeIco from "../assets/Icons/Home.svg";
 import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
+import { Select } from "../Components/Select";
+import { useSortedProducts } from "../hooks/useSorted";
+import { useDebounce } from "usehooks-ts";
+import { Pagintaion } from "../Components/Pagintaion";
 
-type OptionPaginationType = { value: string; label: string };
-type OptionSortType = { value: string; label: string };
-
-const paginationOptions: OptionPaginationType[] = [
-  { value: "8", label: "8" },
-  { value: "16", label: "16" },
-  { value: "32", label: "32" },
-  { value: "All", label: "All" },
-];
-
-const sortOptions: OptionSortType[] = [
+const sortByOptions = [
   { value: "year", label: "Newest" },
   { value: "name", label: "Alphabetically" },
   { value: "price", label: "Cheapest" },
 ];
 
+const perPageOptions = [
+  { value: "8", label: "8" },
+  { value: "16", label: "16" },
+  { value: "32", label: "32" },
+  { value: "all", label: "All" },
+];
+
 export const Catalogue = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const {
-    visibleProducts,
-    categoryProducts,
-    currentItem,
-    setSearchParams,
-    searchParams,
-    setProducts,
-  } = useContext(appContext);
-
+  const dispatch = useAppDispatch();
   const { catalogueId, itemId } = useParams();
-
-  const searchQuery = searchParams.get("query") || "";
-  const currentPage = searchParams.get("page") || 1;
-  const perPage = searchParams.get("per-page");
-  const sortBy = searchParams.get("sort-by");
-
-  const defaultSortOption = useMemo(() => {
-    return {
-      value: sortBy || "year",
-      label: sortBy
-        ? sortOptions.find((option) => option.value === sortBy)?.label ||
-          "Newest"
-        : "Newest",
-    };
-  }, [sortBy]);
-
-  const defaultPaginationOption = useMemo(() => {
-    return {
-      value: perPage || "8",
-      label: perPage || "8",
-    };
-  }, [perPage]);
-
-  const [sortOption, setSortOption] =
-    useState<OptionSortType>(defaultSortOption);
-  const [paginationOption, setPaginationOption] =
-    useState<OptionPaginationType>(defaultPaginationOption);
-
-  const pagination = new PaginationHelper(
-    categoryProducts,
-    +paginationOption.value,
+  const { products, visibleProducts, loaded } = useAppSelector(
+    (state) => state.products,
   );
-  const pages = Array.from({ length: pagination.pageCount() })
-    .fill(0)
-    .map((_, i) => i + 1);
+  const { phoneData } = useAppSelector((state) => state.phoneData);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const setSearchAndSetOption = (
-    item: OptionPaginationType | OptionSortType,
-    key: string,
-  ) => {
-    setSearchParams((params) => {
-      params.set(key, item.value.toString());
+  const sortedProducts = useSortedProducts(visibleProducts);
+  const debouncedProducts = useDebounce(sortedProducts, 250);
 
-      return params;
-    });
+  const getProducts = useCallback(() => {
+    void dispatch(fetchProducts(catalogueId));
+  }, [catalogueId, dispatch]);
 
-    switch (key) {
-      case "per-page":
-        setPaginationOption(item as OptionPaginationType);
-        break;
-      case "sort-by":
-        setSortOption(item as OptionSortType);
-        break;
-      default:
-        break;
-    }
+  const searchQuery = searchParams.get("query") ?? "";
+  const currentPage = searchParams.get("page") ?? "1";
+  const perPage = searchParams.get("perPage") ?? "16";
+  const sortBy = searchParams.get("sortBy") ?? "year";
+  const totalPages = Math.ceil(products.length / +perPage);
 
-    setSearchParams((params) => {
-      params.delete("page");
+  const handleSelectChange = useCallback(
+    (selectType: string, newValue: string) => {
+      setSearchParams((prev) => {
+        prev.set(selectType, newValue);
+        prev.delete("page");
 
-      return params;
-    });
-  };
-
-  const handlePaginationChange = (item: OptionPaginationType) => {
-    setSearchAndSetOption(item, "per-page");
-  };
-
-  const handleSortChange = (item: OptionSortType) => {
-    setSearchAndSetOption(item, "sort-by");
-  };
-
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const data = await api.getNewPhones();
-
-      setProducts(data);
-    } catch {
-      setProducts([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [setProducts]);
+        return prev;
+      });
+    },
+    [setSearchParams],
+  );
 
   useEffect(() => {
-    fetchData();
-  }, [catalogueId, fetchData]);
-
-  useEffect(() => {
-    scrollToTop();
-
-    if (!perPage) {
-      setPaginationOption(defaultPaginationOption);
-    }
-
-    if (!sortBy) {
-      setSortOption(defaultSortOption);
-    }
-  }, [
-    defaultPaginationOption,
-    defaultSortOption,
-    perPage,
-    searchParams,
-    sortBy,
-  ]);
+    getProducts();
+  }, [getProducts]);
 
   return (
     <>
@@ -162,7 +77,7 @@ export const Catalogue = () => {
           <img src={homeIco} alt="home" />
         </Link>
 
-        <img src={rightIco} alt="home" />
+        <img src={rightIco} alt={catalogueId} />
 
         <Link className="capitalize" to={`/${catalogueId}`}>
           {catalogueId}
@@ -172,7 +87,7 @@ export const Catalogue = () => {
           <>
             <img src={rightIco} alt="home" />
 
-            <span className="text-Secondary">{currentItem?.name}</span>
+            <span className="text-Secondary">{phoneData?.name}</span>
           </>
         )}
       </div>
@@ -188,16 +103,16 @@ export const Catalogue = () => {
           </h1>
 
           <p
-            className={`text-Secondary col-span-full ${typographyStyle.bodyText}`}
+            className={`col-span-full text-Secondary ${typographyStyle.bodyText}`}
           >
             {searchQuery && `found ${visibleProducts.length} models`}
 
-            {!searchQuery && categoryProducts.length === 0 && "not found"}
+            {!searchQuery && products.length === 0 && "not found"}
 
             {!searchQuery &&
-              categoryProducts.length !== 0 &&
-              `${categoryProducts.length} ${
-                categoryProducts.length === 1 ? "model" : "models"
+              products.length !== 0 &&
+              `${products.length} ${
+                products.length === 1 ? "model" : "models"
               }`}
           </p>
 
@@ -209,37 +124,36 @@ export const Catalogue = () => {
                 <div className="flex gap-x-4">
                   <div className="flex flex-col gap-y-1">
                     <label
-                      className={`text-Secondary block ${typographyStyle.smallText}`}
+                      className={`block text-Secondary ${typographyStyle.smallText}`}
                       id="aria-label"
                       htmlFor="aria-example-input"
                     >
                       Sort by
                     </label>
 
-                    <StylishReactSelect
-                      options={sortOptions}
-                      onChange={(e) => handleSortChange(e as OptionSortType)}
-                      value={sortOption}
-                      className={`text-Primary h-10 w-[176px] appearance-none ${typographyStyle.button}`}
+                    <Select
+                      value={sortBy}
+                      options={sortByOptions}
+                      onChange={handleSelectChange}
+                      selectType="sortBy"
                     />
                   </div>
 
                   <div className="flex flex-col gap-y-1">
                     <label
-                      className={`text-Secondary block ${typographyStyle.smallText}`}
+                      className={`block text-Secondary ${typographyStyle.smallText}`}
                       id="aria-label"
                       htmlFor="aria-example-input"
                     >
                       Per page
                     </label>
 
-                    <StylishReactSelect
-                      options={paginationOptions}
-                      onChange={(e) =>
-                        handlePaginationChange(e as OptionPaginationType)
-                      }
-                      value={paginationOption}
-                      className={`text-Primary h-10 w-[128px] appearance-none ${typographyStyle.button}`}
+                    <Select
+                      value={perPage}
+                      options={perPageOptions}
+                      onChange={handleSelectChange}
+                      selectType="perPage"
+                      sm
                     />
                   </div>
                 </div>
@@ -249,12 +163,12 @@ export const Catalogue = () => {
 
           <hr className="col-span-full mb-6 border-0" />
 
-          {isLoading ? (
+          {!loaded || !debouncedProducts || !sortedProducts.length ? (
             <Loader />
           ) : (
             <div className="col-span-full grid grid-cols-4 gap-4">
-              {!!visibleProducts.length &&
-                visibleProducts.map((product) => (
+              {!!debouncedProducts.length &&
+                debouncedProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
             </div>
@@ -267,11 +181,11 @@ export const Catalogue = () => {
       <hr className="col-span-full mb-20 border-0" />
 
       {currentPage &&
-        !!pages.length &&
+        !!totalPages &&
         !searchQuery &&
         !itemId &&
         !Number.isNaN(perPage || 8) && (
-          <Pagintaion currentPage={+currentPage} pages={pages} />
+          <Pagintaion currentPage={+currentPage} totalPages={totalPages} />
         )}
     </>
   );

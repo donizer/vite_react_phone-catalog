@@ -3,12 +3,12 @@ import classNames from "classnames";
 import Select, { ClassNamesConfig, StylesConfig } from "react-select";
 import { typographyStyle } from "../CustomStyles/Typography";
 
-type Props = {
+interface Props {
   className: string;
   options: unknown[];
   value: unknown;
   onChange: (e: unknown) => void;
-};
+}
 
 const customClasses: ClassNamesConfig = {
   menu: () => "rounded-none",

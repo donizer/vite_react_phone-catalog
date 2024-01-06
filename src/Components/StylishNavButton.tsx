@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
-type Props = {
+interface Props {
   children?: ReactNode;
   imgUrl?: string;
   to: string;
   disabled?: boolean;
   counter?: number;
-};
+}
 
 export const StylishNavButton: React.FC<Props> = ({
   imgUrl,

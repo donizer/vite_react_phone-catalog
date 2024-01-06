@@ -1,24 +1,24 @@
-/* eslint-disable max-len */
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import React from "react";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-type Props = {
+interface Props {
   disabled?: boolean;
   to: string;
   src: string;
-};
+}
 
 export const BannerItem: React.FC<Props> = ({ disabled, to, src }) => {
   return (
     <Link
       className={classNames(
-        'carousel-image block h-[400px] w-[1040px] shrink-0 object-cover',
+        "carousel-image block h-[400px] w-[1040px] shrink-0 object-cover",
         {
-          'hover:cursor-not-allowed': disabled,
+          "hover:cursor-not-allowed": disabled,
         },
       )}
       to={to}
-      onClick={e => {
+      onClick={(e) => {
         if (disabled) {
           e.preventDefault();
         }

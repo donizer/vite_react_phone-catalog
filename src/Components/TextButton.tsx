@@ -2,11 +2,11 @@
 import classNames from "classnames";
 import React from "react";
 
-type Props = {
+interface Props {
   children: React.ReactNode;
   onClick?: () => void;
   active?: boolean;
-};
+}
 
 export const TextButton: React.FC<Props> = ({ children, onClick, active }) => {
   return (

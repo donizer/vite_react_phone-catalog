@@ -1,25 +1,21 @@
-import { PhoneType } from '../Types/PhoneType';
-import { ProductType } from '../Types/ProductType';
+import { PhoneType } from "../Types/PhoneType";
+import { ProductType } from "../Types/ProductType";
 
-export const baseUrl = 'https://mate-academy.github.io/react_phone-catalog';
+export const baseUrl = "https://mate-academy.github.io/react_phone-catalog";
 
 const fetchData = async (url: string): Promise<ProductType[]> => {
   const response = await fetch(url);
 
-  return response.json();
-};
-
-const fetchPhoneData = async (productId = ''): Promise<PhoneType> => {
-  const response = await fetch(`${baseUrl}/_new/products/${productId}.json`);
-
-  return response.json();
+  return response.json() as Promise<ProductType[]>;
 };
 
 export const api = {
-  getInfo: {
-    phone: fetchPhoneData,
+  getPhoneData: async (productId = ""): Promise<PhoneType> => {
+    const response = await fetch(`${baseUrl}/_new/products/${productId}.json`);
+
+    return response.json() as Promise<PhoneType>;
   },
-  getNewPhones: async () => fetchData(`${baseUrl}/_new/products.json`),
+  getPhones: async () => fetchData(`${baseUrl}/_new/products.json`),
   getExpensivePhones: async () => {
     const data = await fetchData(`${baseUrl}/_new/products.json`);
 
@@ -41,9 +37,9 @@ export const api = {
 
     return data;
   },
-  getProductById: async (productId = '') => {
+  getProductById: async (productId = "") => {
     const data = await fetchData(`${baseUrl}/_new/products.json`);
 
-    return data.find(item => item.itemId === productId) || null;
+    return data.find((item) => item.itemId === productId) ?? null;
   },
 };

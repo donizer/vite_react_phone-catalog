@@ -1,47 +1,45 @@
-/* eslint-disable max-len */
-import { useContext } from "react";
-import { Outlet, Link, useParams } from "react-router-dom";
+import { useCallback } from "react";
+import { Outlet, Link, useParams, useSearchParams } from "react-router-dom";
 import { GridContainer } from "./Components/GridContainer";
 import { typographyStyle } from "./CustomStyles/Typography";
 import { StylishNavButton } from "./Components/StylishNavButton";
 import { ArrowButton } from "./Components/ArrowButton";
 import { scrollToTop } from "./utils/scrollToTop";
-import { appContext } from "./Contexts/AppContext";
 
 import logo from "./assets/Icons/Logo.svg";
 import favoritesIco from "./assets/Icons/Favourites.svg";
 import cartIco from "./assets/Icons/Cart.svg";
 import searchIco from "./assets/Icons/Search.svg";
-import { Modal } from "./Components/Modal";
+// import { Modal } from "./Components/Modal";
+import { useAppSelector } from "./app/hooks";
 
 const App = () => {
-  const {
-    favorites,
-    cartItems,
-    searchParams,
-    setSearchParams,
-    modalInfo,
-    setModalInfo,
-  } = useContext(appContext);
+  const { favorites } = useAppSelector((state) => state.favorites);
+  const { cart } = useAppSelector((state) => state.cart);
   const { catalogueId, itemId } = useParams();
-  const searchQuery = searchParams.get("query") || "";
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchParams((params) => {
-      if (event.target.value) {
-        params.set("query", event.target.value);
-      } else {
-        params.delete("query");
-      }
+  const searchQuery = searchParams.get("query") ?? "";
 
-      return params;
-    });
-  };
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchParams((params) => {
+        if (event.target.value) {
+          params.set("query", event.target.value);
+        } else {
+          params.delete("query");
+        }
+
+        return params;
+      });
+    },
+    [setSearchParams],
+  );
 
   return (
     <>
       <GridContainer>
-        <div className="border-Elements relative z-20 col-span-full flex h-16 items-center border-b-[1px] bg-white">
+        <div className="relative z-20 col-span-full flex h-16 items-center border-b-[1px] border-Elements bg-white">
           <Link to="/" className="ml-6 mr-16">
             <img className="h-16 w-10" src={logo} alt="" />
           </Link>
@@ -61,7 +59,7 @@ const App = () => {
 
             <div className="flex justify-self-end">
               {catalogueId && !itemId && (
-                <div className="border-Elements flex h-full w-80 items-center border border-r-0 px-6 ">
+                <div className="flex h-full w-80 items-center border border-r-0 border-Elements px-6 ">
                   <input
                     value={searchQuery}
                     onChange={handleInputChange}
@@ -80,7 +78,7 @@ const App = () => {
               />
 
               <StylishNavButton
-                counter={cartItems.length}
+                counter={cart.length}
                 to="cart"
                 imgUrl={cartIco}
               />
@@ -92,7 +90,7 @@ const App = () => {
           <Outlet />
         </div>
 
-        <div className="text-Secondary col-span-12 col-start-2 flex h-[96px] items-center justify-between">
+        <div className="col-span-12 col-start-2 flex h-[96px] items-center justify-between text-Secondary">
           <Link to="/" className="flex h-full items-center">
             <img className="h-full w-10" src={logo} alt="" />
           </Link>
@@ -101,7 +99,7 @@ const App = () => {
             className={`flex h-full items-center gap-x-16 ${typographyStyle.uppercase}`}
           >
             <a
-              className="hover:text-Primary flex h-[96px]  items-center transition-all"
+              className="flex h-[96px] items-center  transition-all hover:text-Primary"
               href="https://github.com/donizer/vite_react_phone-catalog/"
               target="_blank"
               rel="noreferrer"
@@ -109,14 +107,14 @@ const App = () => {
               github
             </a>
             <a
-              className="hover:text-Primary flex h-[96px]  items-center transition-all"
+              className="flex h-[96px] items-center  transition-all hover:text-Primary"
               href="#contacts"
               onClick={(e) => e.preventDefault()}
             >
               contacts
             </a>
             <a
-              className="hover:text-Primary flex h-[96px]  items-center transition-all"
+              className="flex h-[96px] items-center  transition-all hover:text-Primary"
               href="#rights"
               onClick={(e) => e.preventDefault()}
             >
@@ -124,9 +122,9 @@ const App = () => {
             </a>
           </nav>
 
-          <div className="font-Mont flex h-full items-center gap-x-4 text-[12px] font-semibold">
+          <div className="flex h-full items-center gap-x-4 font-Mont text-[12px] font-semibold">
             <label
-              className="hover:text-Primary transition-all hover:cursor-pointer"
+              className="transition-all hover:cursor-pointer hover:text-Primary"
               htmlFor="to-top"
             >
               Back to top:
@@ -136,7 +134,7 @@ const App = () => {
         </div>
       </GridContainer>
 
-      {modalInfo && <Modal onClick={setModalInfo} message={modalInfo} />}
+      {/* {modalInfo && <Modal onClick={setModalInfo} message={modalInfo} />} */}
     </>
   );
 };

@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 import classNames from "classnames";
 
-type Props = {
+interface Props {
   active: boolean;
   onClick: (bool: boolean) => void;
-};
+}
 
 export const FavouritesButton: React.FC<Props> = ({ active, onClick }) => {
   const hollowPath =

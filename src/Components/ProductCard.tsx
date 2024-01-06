@@ -1,72 +1,53 @@
-/* eslint-disable max-len */
-import { useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { typographyStyle } from "../CustomStyles/Typography";
 import { ProductType } from "../Types/ProductType";
 import { FavouritesButton } from "./FavouritesButton";
 import { TextButton } from "./TextButton";
 import { baseUrl } from "../api/api";
-import { appContext } from "../Contexts/AppContext";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../features/favoritesSlice";
+import { addToCart, removeCartItem } from "../features/cartSlice";
 
-type Props = {
+interface Props {
   product: ProductType;
-};
+}
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const { favorites, setFavorites, cartItems, setCartItems } =
-    useContext(appContext);
+  const dispatch = useAppDispatch();
+  const { favorites } = useAppSelector((state) => state.favorites);
+  const { cart } = useAppSelector((state) => state.cart);
   const [isLiked, setIsLiked] = useState(
     favorites.some((favProduct) => favProduct.itemId === product.itemId),
   );
 
-  const toggleFavorite = () => {
+  const isInCart = cart.some((cartItem) => cartItem.id === product.itemId);
+
+  const toggleFavorite = useCallback(() => {
     if (isLiked) {
-      setFavorites(
-        favorites.filter((favProduct) => favProduct.itemId !== product.itemId),
-      );
+      dispatch(removeFromFavorites(product.itemId));
       setIsLiked(false);
     } else {
-      setFavorites([...favorites, product]);
+      dispatch(addToFavorites(product));
       setIsLiked(true);
     }
-  };
+  }, [dispatch, isLiked, product]);
 
-  const addToCart = (product: ProductType) => {
-    const cartItemIndex = cartItems.findIndex(
-      (item) => item.product.itemId === product.itemId,
-    );
+  const handleCartButton = () => {
+    if (!isInCart) {
+      dispatch(addToCart(product));
 
-    if (cartItemIndex < 0) {
-      setCartItems([
-        ...cartItems,
-        { quantity: 1, product, id: product.itemId },
-      ]);
-    } else {
-      setCartItems([
-        ...cartItems.slice(0, cartItemIndex),
-        ...cartItems.slice(cartItemIndex + 1),
-      ]);
-    }
-  };
-
-  const getNumberInCart = () => {
-    if (!product) {
       return;
     }
 
-    const cartItemIndex = cartItems.findIndex(
-      (item) => item.product.itemId === product.itemId,
-    );
-
-    if (cartItemIndex < 0) {
-      return null;
-    }
-
-    return cartItems[cartItemIndex].quantity;
+    dispatch(removeCartItem(product.itemId));
   };
 
   return (
-    <div className="border-Elements hover:border-Primary flex w-[272px] flex-col border p-6 transition-all hover:border">
+    <div className="flex w-[272px] flex-col border border-Elements p-6 transition-all hover:border hover:border-Primary">
       <Link to={`/phones/${product.itemId}`}>
         <img
           className="h-[208px] w-[208px] self-center object-contain"
@@ -88,7 +69,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
 
       <div className={`flex gap-2 ${typographyStyle.h2}`}>
         <div className="font-bold leading-[140%] ">${product.price}</div>
-        <div className="text-Secondary relative font-medium line-through ">
+        <div className="relative font-medium text-Secondary line-through ">
           ${product.fullPrice}
         </div>
       </div>
@@ -115,8 +96,8 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       <hr className="mb-4 border-0" />
 
       <div className={`flex h-10 gap-2 ${typographyStyle.button}`}>
-        <TextButton onClick={() => addToCart(product)}>
-          {`${!getNumberInCart() ? "Add to cart" : "Remove from cart"}`}
+        <TextButton active={isInCart} onClick={handleCartButton}>
+          {`${!isInCart ? "Add to cart" : "Remove from cart"}`}
         </TextButton>
 
         <div className="w-10 shrink-0">

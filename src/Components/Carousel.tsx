@@ -3,12 +3,12 @@ import { useSwipeable } from "react-swipeable";
 import { ArrowButton } from "./ArrowButton";
 import { Link } from "react-router-dom";
 
-type BannerItem = {
+interface BannerItem {
   to: string;
   url: string;
-};
+}
 
-type Props = {
+interface Props {
   images: BannerItem[];
   itemWidth?: number;
   itemHeight?: number;
@@ -17,9 +17,9 @@ type Props = {
   frameSize?: number;
   animationDuration?: number;
   infinite?: boolean;
-};
+}
 
-const Carousel: React.FC<Props> = ({
+export const Carousel: React.FC<Props> = ({
   images,
   itemWidth = 130,
   itemHeight = 231,
@@ -128,5 +128,3 @@ const Carousel: React.FC<Props> = ({
     </>
   );
 };
-
-export default Carousel;

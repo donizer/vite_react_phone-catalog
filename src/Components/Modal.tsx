@@ -1,10 +1,10 @@
 import closeIco from "../assets/Icons/Close.svg";
 import { typographyStyle } from "../CustomStyles/Typography";
 
-type Props = {
+interface Props {
   message: string;
   onClick: (e: string) => void;
-};
+}
 
 export const Modal: React.FC<Props> = ({ message, onClick }) => {
   const handleClose = () => {

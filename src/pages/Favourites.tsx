@@ -1,22 +1,21 @@
 /* eslint-disable no-constant-condition */
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import { typographyStyle } from "../CustomStyles/Typography";
-import { appContext } from "../Contexts/AppContext";
 import { ProductCard } from "../Components/ProductCard";
 
 import homeIco from "../assets/Icons/Home.svg";
 import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
+import { useAppSelector } from "../app/hooks";
 
 export const Favourites = () => {
-  const { favorites } = useContext(appContext);
+  const { favorites } = useAppSelector((state) => state.favorites);
 
   return (
     <>
       <hr className="col-span-full mb-6 border-0" />
 
       <div
-        className={`text-Secondary col-span-full flex h-4 items-center gap-x-2 ${typographyStyle.smallText}`}
+        className={`col-span-full flex h-4 items-center gap-x-2 text-Secondary ${typographyStyle.smallText}`}
       >
         <Link to="/">
           <img src={homeIco} alt="home" />
@@ -24,9 +23,7 @@ export const Favourites = () => {
 
         <img src={rightIco} alt=">" />
 
-        <span className="capitalize">
-          favourites
-        </span>
+        <span className="capitalize">favourites</span>
       </div>
 
       <hr className="col-span-full mb-10 border-0" />
@@ -35,7 +32,7 @@ export const Favourites = () => {
         favourites
       </h1>
 
-      <p className={`text-Secondary col-span-full ${typographyStyle.bodyText}`}>
+      <p className={`col-span-full text-Secondary ${typographyStyle.bodyText}`}>
         {`${favorites.length} ${favorites.length === 1 ? "model" : "models"}`}
       </p>
 
@@ -47,12 +44,9 @@ export const Favourites = () => {
         </div>
       ) : (
         <div className="col-span-full grid grid-cols-4 gap-4">
-          {favorites
-            .sort((a, b) => b.year - a.year)
-            .slice(0, 5)
-            .map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {favorites.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       )}
     </>

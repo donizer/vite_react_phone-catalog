@@ -1,46 +1,31 @@
 /* eslint-disable max-len */
 
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../api/api";
-import { appContext } from "../Contexts/AppContext";
 import { Loader } from "../Components/Loader";
 
 import { scrollToTop } from "../utils/scrollToTop";
 import { ItemCard } from "./ItemCard";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchPhoneData } from "../features/phoneDataSlice";
 
 export const ItemPage = () => {
+  const dispatch = useAppDispatch();
   const { itemId } = useParams();
-  const { currentItem, setCurrentItem } = useContext(appContext);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchItem = useCallback(async () => {
-    setCurrentItem(null);
-    setIsLoading(true);
-
-    try {
-      const data = await api.getInfo.phone(itemId);
-
-      setCurrentItem(data);
-    } catch {
-      setCurrentItem(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [itemId, setCurrentItem]);
+  const { phoneData, loaded } = useAppSelector((state) => state.phoneData);
 
   useEffect(() => {
-    scrollToTop();
+    void dispatch(fetchPhoneData(itemId));
 
-    fetchItem();
-  }, [fetchItem, itemId]);
+    scrollToTop();
+  }, [dispatch, itemId]);
 
   return (
     <>
-      {isLoading || !currentItem ? (
+      {!loaded || !phoneData ? (
         <Loader />
       ) : (
-        <ItemCard currentItem={currentItem} />
+        <ItemCard currentItem={phoneData} />
       )}
     </>
   );

@@ -1,4 +1,4 @@
-export type PhoneType = {
+export interface PhoneType {
   id: string;
   namespaceId: string;
   name: string;
@@ -17,9 +17,9 @@ export type PhoneType = {
   camera: string;
   zoom: string;
   cell: string[];
-};
+}
 
-type Description = {
+interface Description {
   title: string;
   text: string[];
-};
+}

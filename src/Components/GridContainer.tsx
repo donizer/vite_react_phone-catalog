@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
 export const GridContainer: React.FC<Props> = ({ children }) => {
   return (

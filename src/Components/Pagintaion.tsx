@@ -1,20 +1,21 @@
-import { useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowButton } from "./ArrowButton";
 import { PaginationButton } from "./PaginationButton";
-import { appContext } from "../Contexts/AppContext";
+import { scrollToTop } from "../utils/scrollToTop";
 
-type Props = {
-  pages: number[];
+interface Props {
+  totalPages: number;
   currentPage: number;
-};
+}
 
-export const Pagintaion: React.FC<Props> = ({ pages, currentPage }) => {
-  const { setSearchParams } = useContext(appContext);
+export const Pagintaion: React.FC<Props> = ({ totalPages, currentPage }) => {
+  const [, setSearchParams] = useSearchParams();
 
   const pickPage = (newPage: number) => {
     if (currentPage === newPage) {
       return;
     }
+    scrollToTop();
 
     setSearchParams((params) => {
       params.set("page", newPage.toString());
@@ -29,6 +30,7 @@ export const Pagintaion: React.FC<Props> = ({ pages, currentPage }) => {
 
       return params;
     });
+    scrollToTop();
   };
 
   const prevPage = () => {
@@ -37,6 +39,7 @@ export const Pagintaion: React.FC<Props> = ({ pages, currentPage }) => {
 
       return params;
     });
+    scrollToTop();
   };
 
   return (
@@ -47,20 +50,19 @@ export const Pagintaion: React.FC<Props> = ({ pages, currentPage }) => {
         direction="left"
       />
 
-      {!!pages.length &&
-        pages.map((page) => (
-          <PaginationButton
-            onClick={() => pickPage(page)}
-            active={currentPage === page}
-            key={page}
-          >
-            {page}
-          </PaginationButton>
-        ))}
+      {Array.from({ length: totalPages }).map((_, i) => (
+        <PaginationButton
+          onClick={() => pickPage(i + 1)}
+          active={currentPage === i + 1}
+          key={i + 1}
+        >
+          {i + 1}
+        </PaginationButton>
+      ))}
 
       <ArrowButton
         onClick={nextPage}
-        disabled={currentPage === pages.length}
+        disabled={currentPage === totalPages}
         direction="right"
       />
     </div>

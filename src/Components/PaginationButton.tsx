@@ -2,11 +2,11 @@ import classNames from 'classnames';
 import React from 'react';
 import { typographyStyle } from '../CustomStyles/Typography';
 
-type Props = {
+interface Props {
   children?: React.ReactNode;
   active?: boolean;
   onClick?: () => void;
-};
+}
 
 export const PaginationButton: React.FC<Props> = ({
   children,
