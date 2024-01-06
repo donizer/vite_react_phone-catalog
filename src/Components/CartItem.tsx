@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
+import { CartItem } from "../Types/CartItem";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../api/api";
 import { typographyStyle } from "../CustomStyles/Typography";
-import { CartItem } from "../Types/CartItem";
 
 import closeIco from "../assets/Icons/Close.svg";
-import plusIco from "../assets/Icons/Plus.svg";
 import minusIco from "../assets/Icons/Minus.svg";
+import plusIco from "../assets/Icons/Plus.svg";
 
 interface Props {
   cartItem: CartItem;

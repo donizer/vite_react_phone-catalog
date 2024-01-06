@@ -1,23 +1,26 @@
-import classNames from "classnames";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useLocalStorage } from "usehooks-ts";
-import { typographyStyle } from "../CustomStyles/Typography";
-import { PhoneType } from "../Types/PhoneType";
 import { api, baseUrl } from "../api/api";
-import { TextButton } from "../Components/TextButton";
-import { FavouritesButton } from "../Components/FavouritesButton";
+import classNames from "classnames";
 import { getHash } from "../utils/hash";
-import { ProductsSlider } from "../Components/ProductsSlider";
-import { ProductType } from "../Types/ProductType";
+import { typographyStyle } from "../CustomStyles/Typography";
 
-import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { addToCart, removeCartItem } from "../features/cartSlice";
 import {
   addToFavorites,
   removeFromFavorites,
 } from "../features/favoritesSlice";
-import { addToCart, removeCartItem } from "../features/cartSlice";
+
+import { FavouritesButton } from "../Components/FavouritesButton";
+import { PhoneType } from "../Types/PhoneType";
+import { ProductType } from "../Types/ProductType";
+import { ProductsSlider } from "../Components/ProductsSlider";
+import { TextButton } from "../Components/TextButton";
+import { useLocalStorage } from "usehooks-ts";
+
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+
+import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
 
 interface Props {
   currentItem: PhoneType;

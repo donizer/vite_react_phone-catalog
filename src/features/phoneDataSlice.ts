@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PhoneType } from "../Types/PhoneType";
 import { api } from "../api/api";
 
-import { PhoneType } from "../Types/PhoneType";
 
 export interface PhoneDataState {
   phoneData: PhoneType | null;

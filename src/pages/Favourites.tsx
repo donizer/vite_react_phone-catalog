@@ -1,11 +1,12 @@
 /* eslint-disable no-constant-condition */
 import { Link } from "react-router-dom";
-import { typographyStyle } from "../CustomStyles/Typography";
 import { ProductCard } from "../Components/ProductCard";
+import { typographyStyle } from "../CustomStyles/Typography";
+
+import { useAppSelector } from "../app/hooks";
 
 import homeIco from "../assets/Icons/Home.svg";
 import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
-import { useAppSelector } from "../app/hooks";
 
 export const Favourites = () => {
   const { favorites } = useAppSelector((state) => state.favorites);

@@ -1,5 +1,6 @@
-import closeIco from "../assets/Icons/Close.svg";
 import { typographyStyle } from "../CustomStyles/Typography";
+
+import closeIco from "../assets/Icons/Close.svg";
 
 interface Props {
   message: string;

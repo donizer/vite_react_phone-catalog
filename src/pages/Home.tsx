@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from "react";
+
+import { api, baseUrl } from "../api/api";
+import type { ProductType } from "../Types/ProductType";
+
 import { Carousel } from "../Components/Carousel";
 import { ProductsSlider } from "../Components/ProductsSlider";
 import { ShopByCategory } from "../Components/ShopByCategory";
-import { api, baseUrl } from "../api/api";
-import { ProductType } from "../Types/ProductType";
 
 const images = [
   {

@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { ProductType } from "../Types/ProductType";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { ProductType } from "../Types/ProductType";
 
 export interface FavoritesState {
   favorites: ProductType[];

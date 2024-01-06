@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import React from 'react';
 import { typographyStyle } from '../CustomStyles/Typography';
 
 interface Props {

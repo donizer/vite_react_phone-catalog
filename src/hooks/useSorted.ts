@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
-import { ProductType } from "../Types/ProductType";
+
+import type { ProductType } from "../Types/ProductType";
 
 type SortedProductsReturnType = ProductType[];
 

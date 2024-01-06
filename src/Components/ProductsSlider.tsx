@@ -1,7 +1,9 @@
 import { useState } from 'react';
+
+import { typographyStyle } from '../CustomStyles/Typography';
+
 import { ArrowButton } from './ArrowButton';
 import { ProductCard } from './ProductCard';
-import { typographyStyle } from '../CustomStyles/Typography';
 import { ProductType } from '../Types/ProductType';
 
 interface Props {

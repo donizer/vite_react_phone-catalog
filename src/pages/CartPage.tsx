@@ -1,16 +1,16 @@
 /* eslint-disable max-len */
-import { Link } from "react-router-dom";
-import { typographyStyle } from "../CustomStyles/Typography";
 import { CartItemCard } from "../Components/CartItem";
+import { Link } from "react-router-dom";
 import { TextButton } from "../Components/TextButton";
+import { typographyStyle } from "../CustomStyles/Typography";
 
-import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   addOneToCartItem,
   removeCartItem,
   removeOneFromCartItem,
 } from "../features/cartSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import leftIco from "../assets/Icons/Chevron (Arrow Left).svg";
 
 export const Cart = () => {
   const dispatch = useAppDispatch();

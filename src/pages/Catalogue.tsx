@@ -1,19 +1,21 @@
-import { useEffect, useCallback } from "react";
-import { Link, Outlet, useParams, useSearchParams } from "react-router-dom";
+import { useCallback, useEffect } from "react";
 
+import { Link, Outlet, useParams, useSearchParams } from "react-router-dom";
 import { typographyStyle } from "../CustomStyles/Typography";
-import { ProductCard } from "../Components/ProductCard";
-import { Loader } from "../Components/Loader";
+import { useDebounce } from "usehooks-ts";
 
 import { fetchProducts } from "../features/productsSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
 
+import { Loader } from "../Components/Loader";
+import { Pagintaion } from "../Components/Pagintaion";
+import { ProductCard } from "../Components/ProductCard";
+import { Select } from "../Components/Select";
+
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import homeIco from "../assets/Icons/Home.svg";
 import rightIco from "../assets/Icons/Chevron (Arrow Right).svg";
-import { Select } from "../Components/Select";
+
 import { useSortedProducts } from "../hooks/useSorted";
-import { useDebounce } from "usehooks-ts";
-import { Pagintaion } from "../Components/Pagintaion";
 
 const sortByOptions = [
   { value: "year", label: "Newest" },

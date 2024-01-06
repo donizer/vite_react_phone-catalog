@@ -1,19 +1,23 @@
 import { useCallback } from "react";
-import { Outlet, Link, useParams, useSearchParams } from "react-router-dom";
-import { GridContainer } from "./Components/GridContainer";
-import { typographyStyle } from "./CustomStyles/Typography";
-import { StylishNavButton } from "./Components/StylishNavButton";
-import { ArrowButton } from "./Components/ArrowButton";
-import { scrollToTop } from "./utils/scrollToTop";
 
-import logo from "./assets/Icons/Logo.svg";
-import favoritesIco from "./assets/Icons/Favourites.svg";
-import cartIco from "./assets/Icons/Cart.svg";
-import searchIco from "./assets/Icons/Search.svg";
+import { Link, Outlet, useParams, useSearchParams } from "react-router-dom";
+import { scrollToTop } from "./utils/scrollToTop";
+import { typographyStyle } from "./CustomStyles/Typography";
+
+import { ArrowButton } from "./Components/ArrowButton";
+import { GridContainer } from "./Components/GridContainer";
+import { StylishNavButton } from "./Components/StylishNavButton";
 // import { Modal } from "./Components/Modal";
+
 import { useAppSelector } from "./app/hooks";
 
-const App = () => {
+import cartIco from "./assets/Icons/Cart.svg";
+import favoritesIco from "./assets/Icons/Favourites.svg";
+import logo from "./assets/Icons/Logo.svg";
+import searchIco from "./assets/Icons/Search.svg";
+
+
+export const App = () => {
   const { favorites } = useAppSelector((state) => state.favorites);
   const { cart } = useAppSelector((state) => state.cart);
   const { catalogueId, itemId } = useParams();
@@ -138,5 +142,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

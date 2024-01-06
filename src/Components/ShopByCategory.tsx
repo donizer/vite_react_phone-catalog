@@ -2,9 +2,9 @@
 import { Link } from "react-router-dom";
 import { typographyStyle } from "../CustomStyles/Typography";
 
+import accessoryBanner from "../img/accessoryN.png";
 import phoneBanner from "../img/phoneN.png";
 import tabletBanner from "../img/tabletN.png";
-import accessoryBanner from "../img/accessoryN.png";
 
 export const ShopByCategory = () => {
   return (

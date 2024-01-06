@@ -1,16 +1,20 @@
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { typographyStyle } from "../CustomStyles/Typography";
-import { ProductType } from "../Types/ProductType";
-import { FavouritesButton } from "./FavouritesButton";
-import { TextButton } from "./TextButton";
 import { baseUrl } from "../api/api";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { typographyStyle } from "../CustomStyles/Typography";
+
+import type { ProductType } from "../Types/ProductType";
+
 import {
   addToFavorites,
   removeFromFavorites,
 } from "../features/favoritesSlice";
+
 import { addToCart, removeCartItem } from "../features/cartSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+
+import { FavouritesButton } from "./FavouritesButton";
+import { TextButton } from "./TextButton";
 
 interface Props {
   product: ProductType;

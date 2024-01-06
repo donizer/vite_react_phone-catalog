@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useSwipeable } from "react-swipeable";
-import { ArrowButton } from "./ArrowButton";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { ArrowButton } from "./ArrowButton";
+import { useSwipeable } from "react-swipeable";
 
 interface BannerItem {
   to: string;

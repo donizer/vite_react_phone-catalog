@@ -1,16 +1,12 @@
-import {
-  configureStore,
-  ThunkAction,
-  Action,
-  combineReducers,
-} from "@reduxjs/toolkit";
-import productsReducer from "../features/productsSlice";
-import phoneDataReducer from "../features/phoneDataSlice";
-import favoritesReducer from "../features/favoritesSlice";
-import cartReducer from "../features/cartSlice";
-
-import storage from "redux-persist/lib/storage";
+import type { Action, ThunkAction } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
+
+import cartReducer from "../features/cartSlice";
+import favoritesReducer from "../features/favoritesSlice";
+import phoneDataReducer from "../features/phoneDataSlice";
+import productsReducer from "../features/productsSlice";
+import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -27,8 +23,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer
-})
+  reducer: persistedReducer,
+});
 
 export const persistor = persistStore(store);
 

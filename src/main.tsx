@@ -1,25 +1,27 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./app/store";
+import "./index.css";
+
 import {
   // HashRouter as Router,
-  BrowserRouter  as Router,
-  Routes,
-  Route,
   Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
-import App from "./App";
-import { NotFound } from "./pages/NotFound";
-import { Home } from "./pages/Home";
-import { Catalogue } from "./pages/Catalogue";
-import { Cart } from "./pages/CartPage";
-import { ItemPage } from "./pages/ItemPage";
-import { Favourites } from "./pages/Favourites";
-import { Loader } from './Components/Loader';
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import "./index.css";
+import { persistor, store } from "./app/store";
+
+import { App } from "./App";
+import { Cart } from "./pages/CartPage";
+import { Catalogue } from "./pages/Catalogue";
+import { Favourites } from "./pages/Favourites";
+import { Home } from "./pages/Home";
+import { ItemPage } from "./pages/ItemPage";
+import { Loader } from "./Components/Loader";
+import { NotFound } from "./pages/NotFound";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

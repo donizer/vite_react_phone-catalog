@@ -2,12 +2,13 @@
 
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Loader } from "../Components/Loader";
 
-import { scrollToTop } from "../utils/scrollToTop";
-import { ItemCard } from "./ItemCard";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+
+import { ItemCard } from "./ItemCard";
+import { Loader } from "../Components/Loader";
 import { fetchPhoneData } from "../features/phoneDataSlice";
+import { scrollToTop } from "../utils/scrollToTop";
 
 export const ItemPage = () => {
   const dispatch = useAppDispatch();

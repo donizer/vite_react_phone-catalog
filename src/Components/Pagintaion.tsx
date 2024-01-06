@@ -1,7 +1,9 @@
 import { useSearchParams } from "react-router-dom";
+
+import { scrollToTop } from "../utils/scrollToTop";
+
 import { ArrowButton } from "./ArrowButton";
 import { PaginationButton } from "./PaginationButton";
-import { scrollToTop } from "../utils/scrollToTop";
 
 interface Props {
   totalPages: number;
