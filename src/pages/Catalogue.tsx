@@ -51,7 +51,11 @@ export const Catalogue = () => {
   const perPage = searchParams.get("perPage") ?? "16";
   const sortBy = searchParams.get("sortBy") ?? "year";
   const totalPages = Math.ceil(products.length / +perPage);
-  const isPaginationVisible = !searchQuery && !itemId && !Number.isNaN(perPage);
+  const isPaginationVisible =
+    !searchQuery &&
+    !itemId &&
+    !Number.isNaN(perPage) &&
+    !!debouncedProducts.length;
 
   const handleSelectChange = useCallback(
     (selectType: string, newValue: string) => {
