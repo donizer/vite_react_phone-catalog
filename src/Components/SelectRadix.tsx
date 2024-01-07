@@ -37,8 +37,6 @@ const RadixSelect: React.FC<Props> = ({
   const handleOnChange = (e: string) => {
     onChange(selectType, e);
     setSelected(e);
-
-    console.log(123);
   };
 
   return (
