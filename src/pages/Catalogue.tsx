@@ -165,14 +165,13 @@ export const Catalogue = () => {
 
           <hr className="col-span-full mb-6 border-0" />
 
-          {!loaded || !debouncedProducts || !sortedProducts.length ? (
+          {!loaded || !debouncedProducts.length ? (
             <Loader />
           ) : (
             <div className="col-span-full grid grid-cols-4 gap-4">
-              {!!debouncedProducts.length &&
-                debouncedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              {debouncedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
             </div>
           )}
 

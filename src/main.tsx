@@ -1,17 +1,18 @@
 import "./index.css";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+import { Provider } from "react-redux";
+
+import { persistor, store } from "./app/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 import {
   Navigate,
   Route,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
 } from "react-router-dom";
-import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from "react-redux";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-
-import { persistor, store } from "./app/store";
 
 import { App } from "./App";
 import { Cart } from "./pages/CartPage";
@@ -26,7 +27,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>
-        <Router basename="vite_react_phone-catalog">
+        <Router>
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Home />} />
