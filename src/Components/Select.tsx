@@ -35,8 +35,8 @@ export const Select: React.FC<Props> = ({
   return (
     <div className={`${!sm ? "w-44" : "w-32"}`}>
       <Listbox value={selected} onChange={handleOnChange}>
-        <div className="relative mt-1">
-          <Listbox.Button className="group relative w-full cursor-pointer border border-Elements bg-white py-2 pl-3 pr-10 text-left font-semibold transition-all hover:border-Primary">
+        <div className="relative">
+          <Listbox.Button className="group relative h-10 w-full cursor-pointer border border-Elements bg-white py-2 pl-3 pr-10 text-left font-semibold transition-all hover:border-Primary">
             {({ open }) => (
               <>
                 <span className="block truncate">{selected.label}</span>

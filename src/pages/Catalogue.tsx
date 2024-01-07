@@ -9,7 +9,7 @@ import { fetchProducts } from "../features/productsSlice";
 import { Loader } from "../Components/Loader";
 import { Pagintaion } from "../Components/Pagintaion";
 import { ProductCard } from "../Components/ProductCard";
-import { Select } from "../Components/Select";
+import RadixSelect from "../Components/SelectRadix";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import homeIco from "../assets/Icons/Home.svg";
@@ -134,7 +134,7 @@ export const Catalogue = () => {
                       Sort by
                     </label>
 
-                    <Select
+                    <RadixSelect
                       value={sortBy}
                       options={sortByOptions}
                       onChange={handleSelectChange}
@@ -151,7 +151,14 @@ export const Catalogue = () => {
                       Per page
                     </label>
 
-                    <Select
+                    {/* <Select
+                      value={perPage}
+                      options={perPageOptions}
+                      onChange={handleSelectChange}
+                      selectType="perPage"
+                      sm
+                    /> */}
+                    <RadixSelect
                       value={perPage}
                       options={perPageOptions}
                       onChange={handleSelectChange}
