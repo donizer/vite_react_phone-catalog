@@ -51,6 +51,7 @@ export const Catalogue = () => {
   const perPage = searchParams.get("perPage") ?? "16";
   const sortBy = searchParams.get("sortBy") ?? "year";
   const totalPages = Math.ceil(products.length / +perPage);
+  const isPaginationVisible = !searchQuery && !itemId && !Number.isNaN(perPage);
 
   const handleSelectChange = useCallback(
     (selectType: string, newValue: string) => {
@@ -165,7 +166,7 @@ export const Catalogue = () => {
 
           <hr className="col-span-full mb-6 border-0" />
 
-          {!loaded || !debouncedProducts.length ? (
+          {!loaded || !sortedProducts.length || !debouncedProducts.length ? (
             <Loader />
           ) : (
             <div className="col-span-full grid grid-cols-4 gap-4">
@@ -181,13 +182,9 @@ export const Catalogue = () => {
 
       <hr className="col-span-full mb-20 border-0" />
 
-      {currentPage &&
-        !!totalPages &&
-        !searchQuery &&
-        !itemId &&
-        !Number.isNaN(perPage || 8) && (
-          <Pagintaion currentPage={+currentPage} totalPages={totalPages} />
-        )}
+      {isPaginationVisible && (
+        <Pagintaion currentPage={+currentPage} totalPages={totalPages} />
+      )}
     </>
   );
 };
